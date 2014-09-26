@@ -11,6 +11,7 @@ class TravisMonitor
   attr_reader :shift_register
 
   def initialize
+    p ENV['TRAVIS_ACCCESS_TOKEN']
     Travis::Pro.access_token = ENV['TRAVIS_ACCCESS_TOKEN']
     @running = false
     @shift_register = ShiftRegister.new({ data: 17, latch: 18, clock: 27, blank: 22, clear: 23 }, 3)
