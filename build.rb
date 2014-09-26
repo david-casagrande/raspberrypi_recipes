@@ -19,9 +19,9 @@ class TravisMonitor
   def build_started(e)
     map = REPOSITORY_PIN_MAP[e.repository.slug]
     return unless map
-    shift_map[map + 16] = 0 #build
-    shift_map[map + 8]  = 1 #pass
-    shift_map[map] = 1      #fail
+    shift_register.memory[map + 16] = 0 #build
+    shift_register.memory[map + 8]  = 1 #pass
+    shift_register.memory[map] = 1      #fail
     shift_register.shift_out!
   end
 
@@ -29,14 +29,14 @@ class TravisMonitor
     map = REPOSITORY_PIN_MAP[e.repository.slug]
     return unless map
 
-    shift_map[map + 16] = 1 #build
+    shift_register.memory[map + 16] = 1 #build
     if e.payload['state'] == 'passed'
-      shift_map[map + 8] = 0 #pass
+      shift_register.memory[map + 8] = 0 #pass
     else
-      shift_map[map] = 0 #fail
+      shift_register.memory[map] = 0 #fail
     end
 
-    shift_out
+    shift_register.shift_out!
   end
 
 
@@ -59,5 +59,3 @@ class TravisMonitor
   end
 
 end
-
-TravisMonitor.new
