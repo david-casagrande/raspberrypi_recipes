@@ -60,3 +60,5 @@ class TravisMonitor
   end
 
 end
+
+TravisMonitor.new
