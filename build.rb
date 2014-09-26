@@ -14,6 +14,7 @@ class TravisMonitor
     Travis::Pro.access_token = ENV['TRAVIS_ACCCESS_TOKEN']
     @running = false
     @shift_register = ShiftRegister.new({ data: 17, latch: 18, clock: 27, blank: 22, clear: 23 }, 3)
+    start_listeners
   end
 
   def build_started(e)
