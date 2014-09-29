@@ -2,12 +2,14 @@ require 'pi_piper'
 
 class ShiftRegister
   attr_reader :data_pin, :clock_pin, :latch_pin, :blank_pin, :clear_pin, :memory
+  attr_accessor :invert
 
   def initialize(pins, register_count = 1, register_size = 8)
     assign_pins(pins)
 
     @memory = Array.new((register_count * register_size), 0)
-
+    @invert = false
+    
     clear_pin.on
     blank_pin.off
   end
