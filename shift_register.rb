@@ -1,8 +1,7 @@
 require 'pi_piper'
 
 class ShiftRegister
-  attr_reader :data_pin, :clock_pin, :latch_pin, :blank_pin, :clear_pin, :memory
-  attr_accessor :invert
+  attr_reader :data_pin, :clock_pin, :latch_pin, :blank_pin, :clear_pin, :memory, :invert
 
   def initialize(pins, register_count = 1, register_size = 8)
     assign_pins(pins)
@@ -21,7 +20,7 @@ class ShiftRegister
 
   def shift_out!
     memory.reverse.each_with_index do |v, i|
-      if (v == 0 && !invert)
+      if (v == 0 && invert)
         set_data(:off)
       else
         set_data(:on)
