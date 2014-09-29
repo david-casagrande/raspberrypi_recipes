@@ -21,7 +21,7 @@ class ShiftRegister
 
   def shift_out!
     memory.reverse.each_with_index do |v, i|
-      if (v == 0 && !invert)
+      if (v == 0 && invert)
         set_data(:off)
       else
         set_data(:on)
