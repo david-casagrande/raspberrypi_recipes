@@ -9,7 +9,7 @@ class ShiftRegister
 
     @memory = Array.new((register_count * register_size), 0)
     @invert = false
-    
+
     clear_pin.on
     blank_pin.off
   end
@@ -21,7 +21,7 @@ class ShiftRegister
 
   def shift_out!
     memory.reverse.each_with_index do |v, i|
-      if (v == 0)
+      if (v == 0 && !invert)
         set_data(:off)
       else
         set_data(:on)
