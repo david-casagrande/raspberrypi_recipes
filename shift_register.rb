@@ -31,10 +31,9 @@ class ShiftRegister
   end
 
   def clear(write = false)
-    clear_pin.off
-    clear_pin.on
+    memory.map!{ 0 }
 
-    latch if write
+    shift_out! if write
   end
 
   def off
