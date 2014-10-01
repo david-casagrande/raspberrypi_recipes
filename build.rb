@@ -11,19 +11,21 @@ class TravisMonitor
   attr_reader :shift_register
 
   def initialize
-    p ENV['TRAVIS_ACCCESS_TOKEN']
-    Travis::Pro.access_token = ENV['TRAVIS_ACCCESS_TOKEN']
+    p ENV['TRAVIS_ACCESS_TOKEN']
+    Travis::Pro.access_token = ENV['TRAVIS_ACCESS_TOKEN']
     @running = false
     @shift_register = ShiftRegister.new({ data: 17, latch: 18, clock: 27, blank: 22, clear: 23 }, 3)
+    @shift_register.invert = true
+    @shift_register.clear(true)
     start_listeners
   end
 
   def build_started(e)
     map = REPOSITORY_PIN_MAP[e.repository.slug]
     return unless map
-    shift_register.memory[map + 16] = 0 #build
-    shift_register.memory[map + 8]  = 1 #pass
-    shift_register.memory[map] = 1      #fail
+    shift_register.memory[map + 16] = :on #build
+    shift_register.memory[map + 8]  = :off #pass
+    shift_register.memory[map] = :off      #fail
     shift_register.shift_out!
   end
 
@@ -31,11 +33,11 @@ class TravisMonitor
     map = REPOSITORY_PIN_MAP[e.repository.slug]
     return unless map
 
-    shift_register.memory[map + 16] = 1 #build
+    shift_register.memory[map + 16] = :off #build
     if e.payload['state'] == 'passed'
-      shift_register.memory[map + 8] = 0 #pass
+      shift_register.memory[map + 8] = :on #pass
     else
-      shift_register.memory[map] = 0 #fail
+      shift_register.memory[map] = :on #fail
     end
 
     shift_register.shift_out!
