@@ -7,7 +7,7 @@ class ShiftRegister
   def initialize(pins, register_count = 1, register_size = 8)
     assign_pins(pins)
 
-    @memory = Array.new((register_count * register_size), 0)
+    @memory = Array.new((register_count * register_size), :off)
     @invert = false
 
     clear_pin.on
@@ -21,17 +21,13 @@ class ShiftRegister
 
   def shift_out!
     memory.reverse.each_with_index do |v, i|
-      if (v == 0)
-        set_data(:off)
-      else
-        set_data(:on)
-      end
+      set_data(v)
     end
     latch
   end
 
   def clear(write = false)
-    memory.map!{ 0 }
+    memory.map!{ :off }
 
     shift_out! if write
   end
@@ -56,7 +52,7 @@ class ShiftRegister
   end
 
   def new_buffer(data)
-    Array.new(memory.length) { |i| data[i] || 0 }
+    Array.new(memory.length) { |i| data[i] || :off }
   end
 
   def set_data(state = :on)
