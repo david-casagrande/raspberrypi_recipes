@@ -8,7 +8,7 @@ class ShiftRegister
     assign_pins(pins)
 
     @memory = Array.new((register_count * register_size), :off)
-    @invert = false
+    invert = false
 
     clear_pin.on
     blank_pin.off
@@ -56,7 +56,7 @@ class ShiftRegister
   end
 
   def set_data(state = :on)
-    invert_state(state) if @invert
+    invert_state(state) if invert
     data_pin.send(state)
     clock_in
     data_pin.off
