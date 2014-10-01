@@ -56,9 +56,18 @@ class ShiftRegister
   end
 
   def set_data(state = :on)
+    invert_state(state) if @invert
     data_pin.send(state)
     clock_in
     data_pin.off
+  end
+
+  def invert_state(state)
+    if state == :on
+      state = :off
+    else
+      state = :on
+    end
   end
 
   def clock_in
