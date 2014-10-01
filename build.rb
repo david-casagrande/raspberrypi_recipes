@@ -5,7 +5,13 @@ require_relative 'shift_register'
 class TravisMonitor
   REPOSITORY_PIN_MAP = {
     'americanhonors/quad-styles' => 0,
-    'americanhonors/quad-advisor' => 1
+    'americanhonors/quad-advisor' => 1,
+    'americanhonors/quad-client' => 2,
+    'americanhonors/contexts' => 3,
+    'americanhonors/advising' => 4,
+    'americanhonors/meetings' => 5,
+    'americanhonors/login' => 6,
+    'americanhonors/streams' => 7
   }
 
   attr_reader :shift_register
