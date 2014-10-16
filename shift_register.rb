@@ -76,11 +76,11 @@ class ShiftRegister
   end
 
   def assign_pins(pins)
-    @data_pin = assign_pin(pins.fetch(:data))
-    @clock_pin = assign_pin(pins.fetch(:clock))
-    @latch_pin = assign_pin(pins.fetch(:latch))
-    @clear_pin = assign_pin(pins.fetch(:clear))
-    @blank_pin = assign_pin(pins.fetch(:blank))
+    @data_pin = pins.fetch(:data)
+    @clock_pin = pins.fetch(:clock)
+    @latch_pin = pins.fetch(:latch)
+    @clear_pin = pins.fetch(:clear)
+    @blank_pin = pins.fetch(:blank)
   end
 
   def assign_pin(pin)
